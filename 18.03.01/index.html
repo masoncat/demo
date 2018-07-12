@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable" >
+    <meta content="default" name="apple-mobile-web-app-status-bar-style">
+    <title>Title</title>
+    <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+<header></header>
+<section class="content-container scroll-container">
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <input type="text"/>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <input type="date"/>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <input type="number">
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <input type="text"/>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+</section>
+<!--<footer></footer>-->
+
+<script>
+    document.addEventListener('click', (e) => {
+        var bodyDom = document.getElementsByTagName('body')[0];
+        if (isInput(e)) {
+            let {target} = e;
+            console.log('focus')
+//            document.getElementsByClassName('content-container')[0].className = 'content-container';
+//            var viewport = document.querySelector("meta[name=viewport]");
+//            // 禁止双指缩放
+//            setTimeout(function () {
+//                bodyDom.scrollTop = 0;
+//            },1000);
+            function blurHandler(e) {
+                console.log('blur')
+                document.getElementsByClassName('content-container')[0].className += ' scroll-container'
+                target.removeEventListener('blur', blurHandler);
+            }
+
+            target.addEventListener('blur', blurHandler);
+        }
+    });
+
+
+    function isInput(e) {
+        let {target} = e;
+        return target.nodeName.toLowerCase() === 'input' || (target.nodeName.toLowerCase() === 'textarea' )  //如果是input或textarea的文本输入框，返回true；否则返回false
+    }
+</script>
+</body>
+</html>

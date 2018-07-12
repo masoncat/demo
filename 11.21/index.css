@@ -1,0 +1,51 @@
+.block{
+    width: 300px;
+    height: 100px;
+    border: 3px solid;
+}
+.block1{
+    position: relative;
+    top: 40px;
+    left: 0;
+    background: green;
+    z-index: 1;
+}
+.content{
+    width: 200px;
+    height: 80px;
+    background: yellow;
+    position: absolute;
+}
+.box{
+    position: relative;
+    width: 150px;
+    height: 60px;
+    background: gray;
+}
+.block2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: red;
+    z-index: 0;
+}
+.block3{
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    background: blue;
+}
+.block4{
+    position: sticky;
+    left: 20px;
+    top: 0;
+}
+.block5 {
+    position: fixed;
+    bottom: 0;
+}
+
+
+#demo2{
+    margin-top: 50px;
+}

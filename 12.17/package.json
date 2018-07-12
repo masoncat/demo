@@ -1,0 +1,46 @@
+{
+  "name": "webpack-learn",
+  "version": "1.0.0",
+  "description": "webpack",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "webpack",
+    "test": "test",
+    "watch": "webpack --watch",
+    "server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/masoncat/webpack.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "wm.liu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masoncat/webpack/issues"
+  },
+  "homepage": "https://github.com/masoncat/webpack#readme",
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.35",
+    "@babel/preset-env": "^7.0.0-beta.35",
+    "babel-loader": "^8.0.0-beta.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "express": "^4.16.2",
+    "file-loader": "^1.1.6",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.1",
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1",
+    "xml-loader": "^1.2.1"
+  }
+}

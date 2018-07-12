@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var jsCollections = document.scripts;
+        console.log(jsCollections);
+
+        for (var i = 0; i < jsCollections.length; i++) {
+            var jsDom = jsCollections[i];
+            console.log(jsDom);
+            console.log(jsDom.src);
+            jsDom.onload = function (e) {
+                console.log('当前的js：' + i + ' load');
+                console.log(e);
+            }
+        }
+    </script>
+    <script src="http://127.0.0.1:8002/demo/18.03.16/a.js" onload="window.a = true;"></script>
+
+    <script>
+    setTimeout(function () {
+        var scriptDom = document.createElement('script');
+        scriptDom.src = 'c.js';
+        document.getElementsByTagName('head')[0].appendChild(scriptDom);
+    }, 300)
+    </script>
+</head>
+<body>
+<script src="http://127.0.0.1:8002/demo/18.03.16/b.js"></script>
+<script src="http://127.0.0.1:8002/demo/18.03.16/d.js" onload="window.d = true;"></script>
+<script>
+    try {
+        var test1 = d;
+    } catch (e) {
+        console.trace(e)
+    }
+
+        setTimeout(function () {
+            window.onload = function (e) {
+                console.log('window load:');
+                console.log(e);
+            }
+        }, 200)
+
+    window.onerror = function (e) {
+        console.log('window error:');
+        console.log(e);
+    }
+
+    var jsCollections = document.scripts;
+    console.log(jsCollections);
+    for (var i = 0; i < jsCollections.length; i++) {
+        var jsDom = jsCollections[i];
+        console.log('============');
+        console.log(jsDom);
+        console.log(jsDom.src);
+        console.log('============');
+
+        jsDom.onload = function (e) {
+            console.log('当前的js：' + i + ' load');
+            console.log(e);
+        }
+    }
+
+</script>
+<!--<script src="c.js"></script>-->
+<script src="index.js"></script>
+</body>
+</html>

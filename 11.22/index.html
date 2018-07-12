@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cors</title>
+</head>
+<body>
+<div id="Block-jsonp">
+    <button type="button" onclick="">jsonp跨域</button>
+</div>
+
+<div id="Block-postMessage">
+    <button type="button" onclick="" class="postmessage-btn">postmessage跨域</button>
+    <iframe src="child.html"></iframe>
+    <iframe src="child.html"></iframe>
+</div>
+
+<div id="Block-access">
+    <button type="button" onclick="">请求头跨域</button>
+</div>
+<script
+        src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script>
+    function callback_success(data) {
+        alert(JSON.stringify(data));
+    }
+    document.getElementsByTagName('button')[0].addEventListener('click',function () {
+        $.ajax({
+            url:'http://localhost:8081/jsonp',
+            type:'get',
+            dataType:'jsonp',
+            jsonp:"callback",
+            jsonpCallback:"callback_success",
+            error:function (res) {
+                alert('异常');
+            }
+        });
+    })
+</script>
+<script>
+    document.getElementsByTagName('button')[1].addEventListener('click', function () {
+        window.frames[0].postMessage('hello,我是childA', 'http://local.b.qunar.com:3001/');
+        window.frames[1].postMessage('hello,我是childB', 'http://local.b.qunar.com:3001/');
+
+    })
+    window.addEventListener('message', function (e) {
+        alert(e.data);
+    })
+</script>
+<script>
+    document.getElementsByTagName('button')[2].addEventListener('click', function () {
+        $.ajax({
+            url:'http://localhost:8081/access',
+            type:'post',
+            data:{},
+            error:function (res) {
+                alert('异常');
+            }
+        });
+
+    })
+</script>
+</body>
+</html>

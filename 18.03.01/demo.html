@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*视图头部*/
+        header {
+            position: fixed;
+            height: 50px;
+            left: 0;
+            right: 0;
+            top: 0;
+            z-index: 9;
+            width: 100%;
+            background: greenyellow;
+        }
+        /*视图底部*/
+        footer {
+            position: fixed;
+            height: 34px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9;
+            background: greenyellow;
+        }
+        /*视图内容区域*/
+        .box {
+            position: absolute;
+            top: 50px;
+            bottom: 34px;
+            overflow-y: scroll;
+            height: 2000px;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    header
+</header>
+
+<!--内容视图区域-->
+<div class="box">
+    <!--内容视图-->
+</div>
+
+<footer>
+    <input type="text" placeholder="请填写商品评论。。。" />
+    <button class="submit">提交</button>
+</footer>
+</body>
+</html>

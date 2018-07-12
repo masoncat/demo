@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="test.js"></script>
+<script>
+    function crtipUpload(opts) {
+        window.app = window.app || {};
+        window.app.callback = function (obj) {
+            const {tagname = '', error_code = '', param = {}} = obj;
+            if (tagname === 'get_device_info') {
+               alert(JSON.stringify(param));
+            }
+        };
+        CtripBusiness.app_get_device_info();
+    }
+//        var utilDeviceInfo = CtripBusiness.app_get_device_info();
+//        alert(CtripBusiness.app_get_device_info);
+//        alert(JSON.stringify(utilDeviceInfo));
+//        var appinfo = CtripHySDK.app.getAppInfo();
+//        alert(JSON.stringify(appinfo));
+//        var deviceInfo = CtripHySDK.app.getDeviceInfo();
+//        alert(JSON.stringify(deviceInfo));
+//    CtripUtil.app_choose_photo(5000*1024, 1);
+    crtipUpload();
+
+</script>
+</body>
+</html>
