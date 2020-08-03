@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="512" height="256"></canvas>
+<script>
+    const canvasDom = document.querySelector('canvas');
+    const ctx = canvasDom.getContext('2d');
+    ctx.translate(canvasDom.width / 2, canvasDom.height);
+    ctx.scale(1, -1);
+    ctx.lineCap = 'round';
+
+
+    class Vector2D {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        rotate(rad) {
+            this.dir = rad;
+            // const c = Math.cos(rad),
+            //     s = Math.sin(rad);
+            return this;
+        }
+
+        scale(length) {
+            this.length = length;
+            return this;
+        }
+
+        copy() {
+            return new Vector2D(this.x, this.y);
+        }
+
+        add(v) {
+            this.x = this.x + v.length * 1 * Math.cos(v.dir);
+            this.y = this.y + v.length * 1 * Math.sin(v.dir);
+            return this;
+        }
+    }
+
+    function drawBranch(context, v0, length, thickness, dir, bias = 0.2) {
+        const v = new Vector2D(1, 0).rotate(dir).scale(length);
+        const v1 = v0.copy().add(v);
+        ctx.beginPath();
+        ctx.moveTo(v0.x, v0.y);
+        ctx.lineTo(v1.x, v1.y);
+        ctx.lineWidth = thickness;
+        ctx.stroke();
+        if (thickness >= 2) {
+            drawBranch(context, v1, length * 0.9, thickness * 0.8, dir + (bias + Math.random() * 0.5));
+            drawBranch(context, v1, length * 0.9, thickness * 0.8, dir - (bias + Math.random() * .5));
+        } else {
+            ctx.beginPath();
+            ctx.arc(v1.x, v1.y, 3, 0, 2 * Math.PI);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+    }
+
+    const v0 = new Vector2D(1, 0);
+    drawBranch(ctx, v0, 20, 10, Math.PI / 2);
+</script>
+</body>
+</html>
+

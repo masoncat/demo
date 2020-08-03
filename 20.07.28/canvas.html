@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="1600" height="1600" style="width: 800px; height: 800px"></canvas>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+    const dataSource = 'https://s5.ssl.qhres.com/static/b0695e2dd30daa64.json';
+    (async function () {
+        const data = await (await fetch(dataSource)).json();
+        const canvasDom = document.querySelector('canvas');
+        const regions = d3.hierarchy(data).sum(d => 1).sort((a, b) => b.value - a.value);
+        const pack = d3.pack().size([1600, 1600]).padding(3);
+        const root = pack(regions);
+        const ctx = canvasDom.getContext('2d');
+        console.log('root', root);
+        draw(root);
+
+        function draw(root, target) {
+            const {x, y, r, data} = root;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            if (target && isInCircle(target, root)) {
+                ctx.strokeStyle = 'red';
+            } else {
+                ctx.strokeStyle = 'blue';
+            }
+            ctx.stroke();
+
+            if (Array.isArray(root.children)) {
+                root.children.forEach(child => {
+                    draw(child, target);
+                })
+            } else {
+                ctx.textAlign = 'center'
+                ctx.font = '1.5rem Arial';
+                ctx.fillText(data.name, x, y, 3 * r);
+            }
+        }
+
+        function isInCircle(target, curr) {
+            var stepX = Math.abs(target.x - curr.x);
+            var stepY = Math.abs(target.y - curr.y);
+            var step = Math.sqrt(stepY * stepY + stepX * stepX);
+            return curr.r > step;
+        }
+
+        canvasDom.addEventListener('mousemove', (e) => {
+            if (!e){
+                return;
+            }
+            ctx.clearRect(0, 0, 1600, 1600);
+            draw(root, {x: e.offsetX*2, y: e.offsetY*2});
+        })
+    }());
+</script>
+</body>
+</html>
+

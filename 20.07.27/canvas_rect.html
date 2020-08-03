@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="500" height="300"></canvas>
+<script>
+    var canvasDom = document.querySelector('canvas');
+    var ctx = canvasDom.getContext('2d');
+    ctx.fillStyle = "rgb(200,0,0)"
+    ctx.translate(-0.5 * 55, -0.5 * 50);
+    ctx.rect(0.5 * canvasDom.width, 0.5 * canvasDom.height, 55, 50);
+    ctx.fill();
+</script>
+</body>
+</html>

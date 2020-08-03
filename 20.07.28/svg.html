@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<svg xmnls="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 1600 1600" stroke="blue"></svg>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+    const dataSource = 'https://s5.ssl.qhres.com/static/b0695e2dd30daa64.json';
+    (async function () {
+        const data = await (await fetch(dataSource)).json();
+        const regions = d3.hierarchy(data).sum(d => 1).sort((a, b) => b.value - a.value);
+        const pack = d3.pack().size([1600, 1600]).padding(3);
+        const root = pack(regions);
+        const svgDom = document.querySelector('svg');
+        draw(root);
+
+        function draw(root, target) {
+            const {x, y, r, data} = root;
+            let circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', r);
+            circle.setAttribute('stroke','blue');
+            circle.setAttribute('fill','none');
+            svgDom.appendChild(circle);
+            // if (target && isInCircle(target, root)) {
+            //     ctx.strokeStyle = 'red';
+            // } else {
+            //     ctx.strokeStyle = 'blue';
+            // }
+            // ctx.stroke();
+
+            if (Array.isArray(root.children)) {
+                root.children.forEach(child => {
+                    draw(child, target);
+                })
+            } else {
+                console.log('123')
+                const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+                text.setAttribute('x', x);
+                text.setAttribute('y', y);
+                text.style={
+                    fontSize: 24,
+                    textAlign: 'center'
+                }
+                // text.setAttribute('font-size', 24);
+                text.innerHTML = data.name;
+                svgDom.appendChild(text);
+                // ctx.textAlign = 'center'
+                // ctx.font = '1.5rem Arial';
+                // ctx.fillText(data.name, x, y, 3 * r);
+            }
+        }
+
+        function isInCircle(target, curr) {
+            var stepX = Math.abs(target.x - curr.x);
+            var stepY = Math.abs(target.y - curr.y);
+            var step = Math.sqrt(stepY * stepY + stepX * stepX);
+            return curr.r > step;
+        }
+
+        // canvasDom.addEventListener('mousemove', (e) => {
+        //     if (!e){
+        //         return;
+        //     }
+        //     ctx.clearRect(0, 0, 1600, 1600);
+        //     draw(root, {x: e.offsetX*2, y: e.offsetY*2});
+        // })
+    }());
+</script>
+</body>
+</html>
+

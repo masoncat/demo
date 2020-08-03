@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="512" height="256"></canvas>
+<script>
+    const canvasDom = document.querySelector('canvas');
+    const ctx = canvasDom.getContext('2d');
+    ctx.translate(canvasDom.width/2, canvasDom.height);
+    ctx.scale(1, -1);
+    ctx.lineCap = 'round';
+
+
+    class Vector2D {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        rotate(rad) {
+            this.dir = rad;
+            // const c = Math.cos(rad),
+            //     s = Math.sin(rad);
+            return this;
+        }
+
+        scale(length) {
+            this.length = length;
+            return this;
+        }
+
+        copy() {
+            return new Vector2D(this.x, this.y);
+        }
+
+        add(v) {
+            this.x = this.x + v.length * 1 * Math.cos(v.dir);
+            this.y = this.y + v.length * 1 * Math.sin(v.dir);
+            return this;
+        }
+    }
+
+
+    function draw(ctx, v0, num, length) {
+        let startDir = 0, startV = v0; //默认是0
+        let dir = Math.PI * 2 / num;
+        while (startDir < Math.PI * 2 ) {
+            ctx.beginPath();
+            ctx.moveTo(startV.x, startV.y);
+            startDir = startDir + dir;
+            startV = new Vector2D(startV.x, startV.y).copy().add({
+                length,
+                dir: startDir
+            });
+            ctx.lineTo(startV.x, startV.y);
+            ctx.stroke();
+        }
+    }
+
+    draw(ctx, new Vector2D(0, 0), 100, 5);
+</script>
+</body>
+</html>
+

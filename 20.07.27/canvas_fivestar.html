@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="500" height="300"></canvas>
+<script>
+    var canvasDom = document.querySelector('canvas');
+    var ctx = canvasDom.getContext('2d');
+    ctx.fillStyle = "rgb(200,0,0)"
+    ctx.moveTo(30,0);
+    ctx.lineTo(40,10);
+    ctx.lineTo(60,10);
+    ctx.lineTo(50,20);
+    ctx.lineTo(60,40);
+    ctx.lineTo(30,30);
+    ctx.lineTo(0,40);
+    ctx.lineTo(10,20);
+    ctx.lineTo(0,10);
+    ctx.lineTo(20,10)
+    ctx.fill();
+</script>
+</body>
+</html>

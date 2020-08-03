@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <title>轮播DEMO | 科博网-钟科的个人博客</title>
+    <style>
+        *{ padding:0; margin:0; border:0; }
+        .wrap{ position: relative; height: 500px; width:360px; overflow:hidden; border:1px solid #ccc; margin:10px auto;  }
+        .wrap-list{ width:9999px; transform:translate3d(-360px,0,0); transition-delay: .3s; transition:ease; }
+        .wrap-list img{ float:left; width:360px; height: 500px; }
+        .btns{ text-align:center; }
+        .btns button{ width:100px; height: 30px; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="wrap-list">
+        <!--这里需要clone-->
+        <img src="http://img.mrco.cn/PKUgbaXooTzIz4TZQl7heAGF.jpg">
+
+        <img src="http://img.mrco.cn/VQeqlUbGMLcGqpy-QnDjzyZn.jpg">
+        <img src="http://img.mrco.cn/E32rcqdZn0uMt9JbXr0w0K95.jpg">
+        <img src="http://img.mrco.cn/uWHhrhupbMphjzsYtS7IRSD_.jpg">
+        <img src="http://img.mrco.cn/k2wZVNRo0YNU7i-wuC_-84Du.jpg">
+        <img src="http://img.mrco.cn/PKUgbaXooTzIz4TZQl7heAGF.jpg">
+
+        <!--这里需要clone-->
+        <img src="http://img.mrco.cn/VQeqlUbGMLcGqpy-QnDjzyZn.jpg">
+    </div>
+</div>
+
+<div class="btns">
+    <button id="btnLeft">左</button>
+    <button id="btnRight">右</button>
+</div>
+
+
+</body>
+</html>
