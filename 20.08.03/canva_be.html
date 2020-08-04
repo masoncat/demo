@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="512" height="256"></canvas>
+<script>
+    const canvasDom = document.querySelector('canvas');
+    const ctx = canvasDom.getContext('2d');
+    ctx.translate(0, canvasDom.height );
+    ctx.scale(1, -1);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    const point1 = [50, 200], point2  = [300, 250], point3 = [500,100];
+    ctx.bezierCurveTo(...point1, ...point2, ...point3)
+    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(0,0,1,0,Math.PI*2);
+    ctx.fill()
+    ctx.beginPath();
+    ctx.arc(...point1,1,0,Math.PI*2);
+    ctx.fill()
+    ctx.beginPath();
+    ctx.arc(...point2,1,0,Math.PI*2);
+    ctx.fill()
+    ctx.beginPath();
+    ctx.arc(...point3,1,0,Math.PI*2);
+    ctx.fill()
+</script>
+</body>
+</html>
+

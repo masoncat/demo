@@ -6,58 +6,60 @@
 <script>
     const canvasDom = document.querySelector('canvas');
     const ctx = canvasDom.getContext('2d');
-    ctx.translate(canvasDom.width/2, canvasDom.height);
+    ctx.translate(canvasDom.width / 2, canvasDom.height / 2);
     ctx.scale(1, -1);
-    ctx.lineCap = 'round';
 
-
-    class Vector2D {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        rotate(rad) {
-            this.dir = rad;
-            // const c = Math.cos(rad),
-            //     s = Math.sin(rad);
-            return this;
-        }
-
-        scale(length) {
-            this.length = length;
-            return this;
-        }
-
-        copy() {
-            return new Vector2D(this.x, this.y);
-        }
-
-        add(v) {
-            this.x = this.x + v.length * 1 * Math.cos(v.dir);
-            this.y = this.y + v.length * 1 * Math.sin(v.dir);
-            return this;
-        }
+    function draw(ctx, points) {
+        ctx.beginPath();
+        ctx.moveTo(...points[0]);
+        points.forEach(point => {
+            ctx.lineTo(...point);
+        })
+        ctx.stroke();
     }
 
+    const TAU_SEGMENTS = 60;
+    const TAU = Math.PI * 2;
 
-    function draw(ctx, v0, num, length) {
-        let startDir = 0, startV = v0; //默认是0
-        let dir = Math.PI * 2 / num;
-        while (startDir < Math.PI * 2 ) {
-            ctx.beginPath();
-            ctx.moveTo(startV.x, startV.y);
-            startDir = startDir + dir;
-            startV = new Vector2D(startV.x, startV.y).copy().add({
-                length,
-                dir: startDir
-            });
-            ctx.lineTo(startV.x, startV.y);
-            ctx.stroke();
+    function arc(x0, y0, radius, startAng = 0, endAng = Math.PI * 2) {
+        const ang = Math.min(TAU, endAng - startAng);
+        const ret = ang === TAU ? [] : [[x0, y0]];
+        const segments = Math.round(TAU_SEGMENTS * ang / TAU);
+        for (let i = 0; i <= segments; i++) {
+            const x = x0 + radius * Math.cos(startAng + ang * i / segments);
+            const y = y0 + radius * Math.sin(startAng + ang * i / segments);
+            ret.push([x, y]);
         }
+        return ret;
     }
 
-    draw(ctx, new Vector2D(0, 0), 100, 5);
+    // x = x0 + a * Math.cos(ang)
+    // y = y0 + b * Math.sin(ang)
+    function ellipse(x0, y0, ra, rb, startAng = 0, endAng = TAU) {
+        const ang = Math.min(TAU, endAng - startAng);
+        const ret = ang === TAU ? [] : [[x0, y0]];
+        const segments = Math.round(TAU_SEGMENTS * ang / TAU);
+        for (let i = 0; i < segments; i++) {
+            const x = x0 + ra * Math.cos(startAng + ang * i / segments);
+            const y = y0 + rb * Math.sin(startAng + ang * i / segments);
+            ret.push([x, y]);
+        }
+        return ret;
+    }
+
+    function parabola(x0, y0, p, min, max) {
+        const ret = [];
+        for(let i = 0; i <= TAU_SEGMENTS; i++) {
+            const s = i / 60;
+            const t = min * (1 - s) + max * s;
+            const x = x0 + 2 * p * t * t;
+            const y = y0 + 2 * p * t;
+            ret.push([x, y]);
+        }
+        return ret;
+    }
+
+    draw(ctx, parabola(0, 0, 10, 10, -10));
 </script>
 </body>
 </html>

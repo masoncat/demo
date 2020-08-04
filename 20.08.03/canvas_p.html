@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<canvas id="canvas" width="512" height="256"></canvas>
+<script>
+    const canvasDom = document.querySelector('canvas');
+    const ctx = canvasDom.getContext('2d');
+    ctx.translate(canvasDom.width / 2, canvasDom.height / 2);
+    ctx.scale(1, -1);
+
+    function draw(points = [], context, {strokeStyle = 'black', fillStyle = null, close = false} = {}) {
+        console.log(...arguments)
+        context.strokeStyle = strokeStyle;
+        context.beginPath();
+        context.moveTo(...points[0]);
+        points.forEach(point => {
+            context.lineTo(...point);
+        })
+        context.stroke();
+        if (close) context.closePath();
+        if (fillStyle) {
+            context.fillStyle = fillStyle;
+            context.fill();
+        }
+        context.stroke();
+    }
+
+    function parametric(xFunc, yFunc) {
+        return function (start, end, seg = 100, ...args) {
+            const points = [];
+            for (let i = 0; i <= seg; i++) {
+                const p = i / seg;
+                const t = start * (1 - p) + end * p;
+                const x = xFunc(t, ...args);
+                const y = yFunc(t, ...args);
+                points.push([x, y])
+            }
+            return {
+                draw: draw.bind(null, points),
+                points
+            }
+        }
+    }
+
+
+    class Vector2D extends Array {
+        constructor(x = 1, y = 0) {
+            super(x, y);
+        }
+
+        set x(v) {
+            this[0] = v;
+        }
+
+        set y(v) {
+            this[1] = v;
+        }
+
+        get x() {
+            return this[0];
+        }
+
+        get y() {
+            return this[1];
+        }
+
+        get length() {
+            return Math.hypot(this.x, this.y);
+        }
+
+        get dir() {
+            return Math.atan2(this.y, this.x);
+        }
+
+        copy() {
+            return new Vector2D(this.x, this.y);
+        }
+
+        add(v) {
+            this.x += v.x;
+            this.y += v.y;
+            return this;
+        }
+
+        sub(v) {
+            this.x -= v.x;
+            this.y -= v.y;
+            return this;
+        }
+
+        scale(a) {
+            this.x *= a;
+            this.y *= a;
+            return this;
+        }
+
+        cross(v) {
+            return this.x * v.y - v.x * this.y;
+        }
+
+        dot(v) {
+            return this.x * v.x + v.y * this.y;
+        }
+
+        normalize() {
+            return this.scale(1 / this.length);
+        }
+
+        rotate(rad) {
+            const c = Math.cos(rad),
+                s = Math.sin(rad);
+            const [x, y] = this;
+            this.x = x * c + y * -s;
+            this.y = x * s + y * c;
+            return this;
+        }
+    }
+
+    // 二阶贝塞尔
+
+    const quadricBezier = parametric(
+        (t, [{x: x0}, {x: x1}, {x: x2}]) => (1 - t) ** 2 * x0 + 2 * t * (1 - t) * x1 + t ** 2 * x2,
+        (t, [{y: y0}, {y: y1}, {y: y2}]) => (1 - t) ** 2 * y0 + 2 * t * (1 - t) * y1 + t ** 2 * y2,
+    );
+
+    const p0 = new Vector2D(0, 0);
+    const p1 = new Vector2D(100, 0);
+    p1.rotate(0.75);
+    const p2 = new Vector2D(200, 0);
+    const count = 30;
+    for (let i = 0; i < count; i++) {
+        // 绘制30条从圆心出发，旋转不同角度的二阶贝塞尔曲线
+        p1.rotate(2 / count * Math.PI);
+        p2.rotate(2 / count * Math.PI);
+        quadricBezier(0, 1, 100, [
+            p0,
+            p1,
+            p2,
+        ]).draw(ctx);
+    }
+</script>
+</body>
+</html>
+
